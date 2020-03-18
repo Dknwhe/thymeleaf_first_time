@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>users-list</title>
+</head>
+<body>
+    <h1>Users</h1>
+
+    <div th:if="${users.isEmpty()}">
+        <p>No Users in storage</p>
+    </div>
+
+    <div th:unless="${users.isEmpty()}">
+        <ul>
+             <li th:each="user : ${users}">
+                <p>Email: <span th:text="${user.email}"></span></p>
+                <p>Name: <span th:text="${user.name}"></span></p>
+                <p>Birth date: <span th:text="${user.birthDate}"></span></p>
+                <p>Reg date: <span th:text="${user.timestamp}"></span></p>
+                 <a th:href="@{users/find(id=${user.userId})}">details</a>
+                 <form th:action="@{users/delete}" method="post">
+                     <input type="hidden" id="id" name="id" th:value="${user.userId}" />
+                     <input type="submit" value="delete" />
+                 </form>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
